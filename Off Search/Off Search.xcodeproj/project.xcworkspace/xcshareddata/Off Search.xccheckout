@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>3050F17B-8337-4C5B-B1FC-7F1A2BFFF8FE</string>
+	<string>2F839257-E4C3-47AF-91CF-C57F525415C6</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Off Search</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>499DE168-B610-4D9D-9444-FDFFA70F40DA</key>
-		<string>https://github.com/shinyahirai/DistributesFile.git</string>
+		<key>8E198235-7EAD-40CF-A377-5E46FE77EF69</key>
+		<string>https://github.com/shinyahirai/OffSearch_ver.2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Off Search/Off Search.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>499DE168-B610-4D9D-9444-FDFFA70F40DA</key>
+		<key>8E198235-7EAD-40CF-A377-5E46FE77EF69</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/shinyahirai/DistributesFile.git</string>
+	<string>https://github.com/shinyahirai/OffSearch_ver.2.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>499DE168-B610-4D9D-9444-FDFFA70F40DA</string>
+	<string>8E198235-7EAD-40CF-A377-5E46FE77EF69</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>499DE168-B610-4D9D-9444-FDFFA70F40DA</string>
+			<string>8E198235-7EAD-40CF-A377-5E46FE77EF69</string>
 			<key>IDESourceControlWCCName</key>
-			<string>DistributesFile</string>
+			<string>OffSearch_ver</string>
 		</dict>
 	</array>
 </dict>

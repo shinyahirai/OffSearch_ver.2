@@ -9,7 +9,12 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+// Admobの広告ID
+#define ADMOB_UNIT_ID @"ca-app-pub-2184081429485889/7218774852"
+
+@interface ViewController () {
+    
+}
 
 @end
 
@@ -25,39 +30,107 @@
     UILabel *_processinglabel;
 }
 
-@synthesize adBannerView;
 
 #pragma mark adBannerView
 //広告の初期化
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    adBannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-    adBannerView.delegate = self;
-    [adBannerView setHidden:YES];
+    
+//    adBannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
+//    adBannerView.delegate = self;
+//    [adBannerView setHidden:YES];
 //    CGRect bannerFrame = adBannerView.frame;
 //    bannerFrame.origin.y = self.view.frame.size.height - self.navigationBar.frame.size.height - adBannerView.frame.size.height;
 //    self.adBannerView.frame = bannerFrame;
-    [self.view addSubview:adBannerView];
+//    [self.view addSubview:adBannerView];
 }
 
 //広告の在庫がある場合は表示する
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
-    [banner setHidden:NO];
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner {
+    if (!bannerIsVisible) {
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        banner.frame = CGRectOffset(banner.frame, 0, CGRectGetHeight(banner.frame) + 20);
+        banner.alpha = 1.0;
+        
+        NSLog(@"aaa = %f",CGRectGetHeight(banner.frame) + 20);
+        // もしadMobが表示中なら非表示に
+        if(adMobIsVisible){
+            adMobView.frame = CGRectOffset(adMobView.frame, 0, -CGRectGetHeight(adMobView.frame) - 20);
+            adMobView.alpha = 0.0;
+            adMobIsVisible = NO;
+        }
+        
+        [UIView commitAnimations];
+        bannerIsVisible = YES;
+    }
+//    [banner setHidden:NO];
 }
 
 //広告の在庫がない場合は非表示にする
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-    [banner setHidden:YES];
+    if (bannerIsVisible) {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        banner.frame = CGRectOffset(banner.frame, 0, -CGRectGetHeight(banner.frame) - 20);
+        banner.alpha = 0.0;
+        
+        [UIView commitAnimations];
+        bannerIsVisible = NO;
+    }
+    
+    // iAdを表示することが出来なかったらadMobを呼び出す
+    GADRequest* request = [GADRequest request];
+    
+    request.testDevices = [NSArray arrayWithObjects:
+                           GAD_SIMULATOR_ID,                               // シミュレータ
+                           @"00fc204bbc5fdf2b7097ed42369252250a4a2cad",                              // iOS 端末をテスト
+                           nil];
+    request.testing = YES;
+    [adMobView loadRequest:request];
+    
+//    [banner setHidden:YES];
 }
 
-#pragma mark -
-#pragma mark roading view
+#pragma mark - adMobBannerView
+- (void)adViewDidReceiveAd:(GADBannerView *)banner
+{
+    if(bannerIsVisible) return;
+    
+    if (!adMobIsVisible) {
+        
+        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        adMobView.frame = CGRectOffset(adMobView.frame, 0, CGRectGetHeight(adMobView.frame) + 20);
+        adMobView.alpha = 1.0;
+        
+        NSLog(@"bbb = %f",CGRectGetHeight(adMobView.frame) + 20);
+        [UIView commitAnimations];
+        adMobIsVisible = YES;
+    }
+}
+
+- (void)adView:(GADBannerView *)banner didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    if (adMobIsVisible) {
+        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        banner.frame = CGRectOffset(banner.frame, 0, -CGRectGetHeight(banner.frame) - 20);
+        banner.alpha = 0.0;
+        
+        [UIView commitAnimations];
+        adMobIsVisible = NO;
+    }
+}
+
+#pragma mark - roading view
 -(void) indicatorStart {
     // スタートメソッド
     // 元となるViewをつくる
@@ -80,7 +153,7 @@
     
     // 処理中のコメント表示用ラベルをつくる
     _processinglabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 26, 200,90)];
-    _processinglabel.text = @"読み込み中...";
+    _processinglabel.text = @"検索中...";
     _processinglabel.font = [UIFont fontWithName:@"Arial Rounded MT Bold" size:18.0f];
     _processinglabel.textAlignment = 1;
     _processinglabel.backgroundColor = [UIColor clearColor];
@@ -139,9 +212,9 @@
     // isBoolがNOの場合、...
     if (!isBool) {
     
-        NSString* messageStr = @"ネットにまったく繋がっていない状態でも、調べたい単語をその場ですぐに調べることができるアプリです。";
+        NSString* messageStr = @"ネットにまったく繋がっていないオフライン状態でも、調べたい単語をその場ですぐに調べることができるアプリです。";
     
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"ノーネット辞書とは"
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Searchとは"
                                                             message:messageStr
                                                            delegate:nil
                                                   cancelButtonTitle:nil
@@ -191,7 +264,7 @@
     // TODO: 広告解除用     UINavigationBar* navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
     UINavigationBar* navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 70, 320, 44)];
     // NavigationItemを生成
-    UINavigationItem *navTitle = [[UINavigationItem alloc] initWithTitle:@"ノーネット辞書"];
+    UINavigationItem *navTitle = [[UINavigationItem alloc] initWithTitle:@"Off Search"];
     // 設定ボタン生成
     UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(pushSettingButton)];
     // NavigationBarの表示
@@ -206,6 +279,26 @@
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"Header"];
 
     [self.view addSubview:navBar];
+    
+    // iAdバナービューの作成
+    adBannerView = [[ADBannerView alloc] init];
+    adBannerView.frame = CGRectMake(0, -adBannerView.frame.size.height, adBannerView.frame.size.width, adBannerView.frame.size.height);
+    adBannerView.delegate = self;
+    adBannerView.autoresizesSubviews = YES;
+    adBannerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self.view addSubview:adBannerView];
+    adBannerView.alpha = 0.0;
+    bannerIsVisible = NO;
+    
+    // AdMobバナービューの作成
+    adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    adMobView.frame = CGRectMake(0, -adMobView.frame.size.height, adMobView.frame.size.width, adMobView.frame.size.height);
+    adMobView.delegate = self;
+    adMobView.adUnitID = ADMOB_UNIT_ID;
+    adMobView.rootViewController = self;
+    [self.view addSubview:adMobView];
+    adMobView.alpha = 0.0;
+    adMobIsVisible = NO;
 }
 
 - (void)pushSettingButton {
@@ -220,8 +313,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -
-#pragma mark tableview
+#pragma mark - tableview
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -346,8 +438,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark search bar & keyboard
+#pragma mark - search bar & keyboard
 - (void)keyboardWillShow:(NSNotification*)notification {
     /*
      キーボードが表示される前にイベントをキャッチして処理をする
@@ -502,7 +593,6 @@
     [_searchBar resignFirstResponder];
 }
 
-#pragma mark -
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController

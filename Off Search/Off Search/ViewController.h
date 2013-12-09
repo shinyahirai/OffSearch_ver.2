@@ -9,24 +9,27 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>  // UIViewの角を丸めるためのフレームワーク。今回はローディング画面で使用
 #import <iAd/iAd.h>
+#import "GADBannerView.h"
 //#import <CoreData/CoreData.h>  // Core Data を使ってデータを管理するために使用
 #import "History.h"
 #import "AppDelegate.h"
 #import "SettingViewController.h"
 
-@interface ViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,ADBannerViewDelegate> {
+@interface ViewController : UIViewController <UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,ADBannerViewDelegate,GADBannerViewDelegate> {
     // Core Data 用
-    NSMutableArray *_objectChanges;
-    NSMutableArray *_sectionChanges;
+    NSMutableArray* _objectChanges;
+    NSMutableArray* _sectionChanges;
 @private
-    ADBannerView *adBannerView;
+    ADBannerView* adBannerView;
+    GADBannerView* adMobView;
+    BOOL bannerIsVisible;
+    BOOL adMobIsVisible;
 }
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (retain, nonatomic) IBOutlet ADBannerView *adBannerView;
 
 // Core Data 用
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
