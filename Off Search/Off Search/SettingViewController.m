@@ -7,8 +7,25 @@
 //
 
 #import "SettingViewController.h"
+#import "MyPaymentTransactionObserver.h"
 
-@interface SettingViewController ()
+@interface SettingViewController () {
+    // Purchases
+    UIView *_viewGround;
+    UIView *_baseView;
+    UIButton* _cancelButton;
+    UIButton* _buyButton;
+    UITextView* _textView;
+    
+    // ローディング画面用変数
+    UIView *_loadingViewGround;
+    UIView *_loadingView;
+    UIActivityIndicatorView *_indicatorView;
+    UILabel *_processinglabel;
+    
+    NSTimer *_indicatorCompletedTimer;
+    NSTimer *_viewCompletedTimer;
+}
 
 @end
 
@@ -21,10 +38,85 @@
         // Custom initialization
     }
     return self;
-}
+}   
 
 -(void)pushbackButton {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - roading view
+-(void) indicatorStart {
+    // スタートメソッド
+    // 元となるViewをつくる
+    _loadingViewGround = [[UIView alloc] initWithFrame:[[self view] bounds]];
+    [self.view addSubview:_loadingViewGround];
+    
+    // 丸みを帯びた土台となるViewをつくる
+    _loadingView = [[UIView alloc] initWithFrame:CGRectMake(60,100,200,110)];
+    [_loadingView setBackgroundColor:[UIColor lightGrayColor]];
+    _loadingView.layer.cornerRadius = 10;
+    _loadingView.clipsToBounds = YES;
+    [_loadingView setAlpha:0.0];
+    [_loadingViewGround addSubview:_loadingView];
+    
+    // indicator(処理中を知らせるためのクルクル回るあれ)をつくる
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [_indicatorView setFrame:CGRectMake (79, 15, 40, 40)];
+    [_indicatorView setAlpha:0.0];
+    [_loadingView addSubview:_indicatorView];
+    
+    // 処理中のコメント表示用ラベルをつくる
+    _processinglabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 26, 200,90)];
+    _processinglabel.text = @"処理中...";
+    _processinglabel.font = [UIFont fontWithName:@"Arial Rounded MT Bold" size:18.0f];
+    _processinglabel.textAlignment = 1;
+    _processinglabel.backgroundColor = [UIColor clearColor];
+    _processinglabel.textColor = [UIColor whiteColor];
+    [_processinglabel setAlpha:0.0];
+    [_loadingView addSubview:_processinglabel];
+    
+    [_indicatorView startAnimating];
+    
+    // 0.5秒かけてフワッとローディング画面がでるようにするアニメーション
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.5];
+    [_loadingView setAlpha:0.4];
+    [_indicatorView setAlpha:1.0];
+    [_processinglabel setAlpha:1.0];
+	[UIView commitAnimations];
+}
+
+// こっちは隠すだけ
+-(void) indicatorHide {
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.5];
+    [_loadingView setAlpha:0.0];
+    [_indicatorView setAlpha:.0];
+    [_processinglabel setAlpha:0.0];
+    [_indicatorView stopAnimating];
+    [UIView commitAnimations];
+    
+    [self indicatorSetTimeInterval];
+}
+
+// ストップメソッド
+-(void) indicatorStop {
+    // タイマー起動
+    [_indicatorCompletedTimer invalidate];
+
+    [_indicatorView stopAnimating];
+    [_loadingViewGround removeFromSuperview];
+    [_loadingView removeFromSuperview];
+}
+
+// indicatorRemove用のタイマー
+- (void)indicatorSetTimeInterval {
+    //2秒後にセレクタメソッドを実行する
+    _indicatorCompletedTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                       target:self
+                                                     selector:@selector(indicatorStop)
+                                                     userInfo:nil
+                                                      repeats:NO];
 }
 
 - (void)viewDidLoad
@@ -52,6 +144,20 @@
         //viewControllerで制御することを伝える。iOS7 からできたメソッド
         [self setNeedsStatusBarAppearanceUpdate];
     }
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    // 購入処理が完了した時の通知を受け取るように登録
+    [notificationCenter addObserver:self
+                           selector:@selector(paymentCompletedNotification:)
+                               name:kPaymentCompletedNotification
+                             object:nil];
+    
+    // 購入処理が失敗した時の通知を受け取るように登録
+    [notificationCenter addObserver:self
+                           selector:@selector(paymentErrorNotification:)
+                               name:kPaymentErrorNotification
+                             object:nil];
+
 }
 
 #pragma mark -
@@ -72,7 +178,7 @@
 - (void)postSocial {
     // UIActivityViewControllerはソーシャル等に共有する機能を持ったViewを下からmodalでだしてくれる
     // 今回はSettingの中の共有ボタンで使用
-    NSString *text = @"オフラインでも辞書検索できるアプリ【Off Search】";
+    NSString *text = @"オフラインでもサクサク辞書検索できるアプリ【Off Search】";
     NSURL* url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/off-search/id768224020?ls=1&mt=8"];
     NSArray* actItems = [NSArray arrayWithObjects: text, url, nil];
     NSLog(@"actItems = %@",actItems);
@@ -120,6 +226,7 @@
 #pragma mark tableview
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // return 2;
     return 3;
 }
 
@@ -134,7 +241,7 @@
 //    if (section == 0) {
 //        return @"入力履歴";
 //    } else {
-//        return @"ノーネット辞書について";
+//        return @"Off Search辞書について";
 //    }
 }
 
@@ -205,6 +312,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         // 広告削除(有料)機能実装予定
+        [self purchaseView];
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         // バージョン確認機能
         
@@ -235,5 +343,195 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - purchases view
+- (void)purchaseView {
+    // 元となるViewをつくる
+    _viewGround = [[UIView alloc] initWithFrame:[[self view] bounds]];
+    [self.view addSubview:_viewGround];
+    
+    // 丸みを帯びた土台となるViewをつくる
+    _baseView = [[UIView alloc] initWithFrame:CGRectMake(10,20,300,538)];
+    [_baseView setBackgroundColor:[UIColor whiteColor]];
+    _baseView.layer.cornerRadius = 4;
+    _baseView.clipsToBounds = YES;
+    [_baseView setAlpha:0.0];
+    [_viewGround addSubview:_baseView];
+    
+    // ボタンとテキストビューをつける
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 140, 20)];
+    [_cancelButton setAlpha:0.0];
+    [_cancelButton setTitle:@"今はやめとく" forState:UIControlStateNormal];
+    [_cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_cancelButton addTarget:self action:@selector(purchaseHide) forControlEvents:UIControlEventTouchUpInside];
+    [_baseView addSubview:_cancelButton];
+    
+    _buyButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 450, 60, 20)];
+    [_buyButton setAlpha:0.0];
+    [_buyButton setTitle:@"購入" forState:UIControlStateNormal];
+    [_buyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_buyButton addTarget:self action:@selector(handleBuyButton) forControlEvents:UIControlEventTouchUpInside];
+    [_baseView addSubview:_buyButton];
+    
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(40, 100, 240, 250)];
+    [_textView setAlpha:0.0];
+    [_baseView addSubview:_textView];
+
+    // 0.5秒かけてフワッとローディング画面がでるようにするアニメーション
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.5];
+    [_baseView setAlpha:0.9];
+    [_cancelButton setAlpha:1.0];
+    [_buyButton setAlpha:1.0];
+    [_textView setAlpha:1.0];
+	[UIView commitAnimations];
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self startProductRequest];
+}
+
+// viewを隠すだけ
+-(void)purchaseHide {
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:0.5];
+    [_baseView setAlpha:0.0];
+    [_buyButton setAlpha:0.0];
+    [_cancelButton setAlpha:0.0];
+    [_textView setAlpha:0.0];
+	[UIView commitAnimations];
+    
+    [self viewSetTimeInterval];
+}
+
+// viewをremove
+-(void)purchaseRemove {
+    [_viewCompletedTimer invalidate];
+    [_viewGround removeFromSuperview];
+    [_baseView removeFromSuperview];
+    [_buyButton removeFromSuperview];
+    [_cancelButton removeFromSuperview];
+    [_textView removeFromSuperview];
+}
+
+// view用のタイマー
+- (void)viewSetTimeInterval {
+    //2秒後にセレクタメソッドを実行する
+    _viewCompletedTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                       target:self
+                                                     selector:@selector(purchaseRemove)
+                                                     userInfo:nil
+                                                      repeats:NO];
+}
+
+#pragma mark - purchase
+- (void)startProductRequest {
+    // iTunes Connectで登録したプロダクトのIDに書き換えて下さい
+    NSSet *productIds = [NSSet setWithObjects:@"com.shinya.hirai.1880mm.Off_Search.Remove_ads", nil];
+    
+    SKProductsRequest *productRequest;
+    productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIds];
+    productRequest.delegate = self;
+    [productRequest start];
+    [self indicatorStart];
+}
+
+- (void)buy {
+    // 購入処理の開始前に、端末の設定がコンテンツを購入することができるようになっているか確認する
+    if ([SKPaymentQueue canMakePayments] == NO) {
+        NSString *message = @"機能制限でApp内での購入が不可になっています。";
+        UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"エラー"
+                                                      message:message
+                                                     delegate:self
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    // 購入処理を開始する
+    SKPayment *payment = [SKPayment paymentWithProduct:[_products objectAtIndex:0]];
+    [[SKPaymentQueue defaultQueue] addPayment:payment];
+}
+
+#pragma mark - SKProductsRequestDelegate
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
+    for (NSString *invalidProductIdentifier in response.invalidProductIdentifiers) {
+        // invalidProductIdentifiersがあればログに出力する
+        NSLog(@"%s invalidProductIdentifiers : %@", __PRETTY_FUNCTION__, invalidProductIdentifier);
+    }
+    
+    // プロダクト情報を後から参照できるようにメンバ変数に保存しておく
+    self.products = response.products;
+    NSLog(@"self.products = %@",self.products);
+    
+    // 取得したプロダクト情報を順番にUItextVIewに表示する（今回は1つだけ）
+    for (SKProduct *product in response.products) {
+        NSString *text = [NSString stringWithFormat:@"Title %@\n\nDescription %@\n\nPrice %@\n\n",
+                          product.localizedTitle,
+                          product.localizedDescription,
+                          product.price];
+        _textView.text = text;
+    }
+    NSLog(@"_textView.text = %@",_textView.text);
+    
+    [self indicatorHide];
+    
+    // 購入ボタンを有効にする
+    _buyButton.enabled = YES;
+}
+
+#pragma mark - SKRequestDelegate
+- (void)requestDidFinish:(SKRequest *)request {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)paymentCompletedNotification:(NSNotification *)notification {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    // 実際はここで機能を有効にしたり、コンテンツを表示したいする
+    SKPaymentTransaction *transaction = [notification object];
+    NSString *message = [NSString stringWithFormat:@"%@ が購入されました", transaction.payment.productIdentifier];
+    UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理完了"
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+    [alert show];
+    
+    [self indicatorHide];
+}
+
+- (void)paymentErrorNotification:(NSNotification *)notification {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    // ここでエラーを表示する
+    SKPaymentTransaction *transaction = [notification object];
+    NSString *message = [NSString stringWithFormat:@"エラーコード %d", transaction.error.code];
+    UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理失敗"
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+    [alert show];
+    
+    [self indicatorHide];
+}
+
+#pragma mark - handle method
+//- (void)handleProductsRequestButton {
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
+//    [self startProductRequest];
+//}
+
+- (void)handleBuyButton {
+    [self indicatorStart];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self buy];
+}
+
 
 @end

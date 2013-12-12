@@ -42,6 +42,7 @@
 		65F4DA0F1855F2DD0026CDB5 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA0E1855F2DD0026CDB5 /* AdSupport.framework */; };
 		65F4DA1B1855F70A0026CDB5 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA1A1855F70A0026CDB5 /* libGoogleAdMobAds.a */; };
 		65F4DA1D1855FC5A0026CDB5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA1C1855FC5A0026CDB5 /* AVFoundation.framework */; };
+		65F4DAA218574AA60026CDB5 /* MyPaymentTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,8 @@
 		65F4DA191855F70A0026CDB5 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = Ad/Admob/GADInterstitialDelegate.h; sourceTree = "<group>"; };
 		65F4DA1A1855F70A0026CDB5 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = Ad/Admob/libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		65F4DA1C1855FC5A0026CDB5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		65F4DAA018574AA60026CDB5 /* MyPaymentTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPaymentTransactionObserver.h; sourceTree = "<group>"; };
+		65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPaymentTransactionObserver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +196,8 @@
 				654F39A6183F899C00A41EF5 /* ViewController.m */,
 				65267CB11841602D00FBA5C4 /* SettingViewController.h */,
 				65267CB21841602D00FBA5C4 /* SettingViewController.m */,
+				65F4DAA018574AA60026CDB5 /* MyPaymentTransactionObserver.h */,
+				65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */,
 				654F39A8183F899C00A41EF5 /* Images.xcassets */,
 				654F3997183F899C00A41EF5 /* Supporting Files */,
 			);
@@ -370,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F4DAA218574AA60026CDB5 /* MyPaymentTransactionObserver.m in Sources */,
 				654F39A7183F899C00A41EF5 /* ViewController.m in Sources */,
 				654F39A1183F899C00A41EF5 /* AppDelegate.m in Sources */,
 				654F399D183F899C00A41EF5 /* main.m in Sources */,
@@ -452,7 +458,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C188799D-8D64-4AEF-82FB-547ACED34002";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -474,8 +480,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shinya Hirai (N5K8G7XZX2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shinya Hirai (N5K8G7XZX2)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -486,7 +492,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "C188799D-8D64-4AEF-82FB-547ACED34002";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -497,8 +503,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shinya Hirai (6HQU2J742P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shinya Hirai (6HQU2J742P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Off Search/Off Search-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Off Search/Off Search-Info.plist";
@@ -522,7 +528,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shinya Hirai (6HQU2J742P)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Off Search/Off Search-Prefix.pch";

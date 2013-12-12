@@ -28,23 +28,12 @@
     UIView *_loadingView;
     UIActivityIndicatorView *_indicatorView;
     UILabel *_processinglabel;
+    
+    BOOL isPurchase;
 }
 
 
 #pragma mark adBannerView
-//広告の初期化
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-//    adBannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-//    adBannerView.delegate = self;
-//    [adBannerView setHidden:YES];
-//    CGRect bannerFrame = adBannerView.frame;
-//    bannerFrame.origin.y = self.view.frame.size.height - self.navigationBar.frame.size.height - adBannerView.frame.size.height;
-//    self.adBannerView.frame = bannerFrame;
-//    [self.view addSubview:adBannerView];
-}
 
 //広告の在庫がある場合は表示する
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
@@ -67,7 +56,6 @@
         [UIView commitAnimations];
         bannerIsVisible = YES;
     }
-//    [banner setHidden:NO];
 }
 
 //広告の在庫がない場合は非表示にする
@@ -93,8 +81,6 @@
                            nil];
     request.testing = YES;
     [adMobView loadRequest:request];
-    
-//    [banner setHidden:YES];
 }
 
 #pragma mark - adMobBannerView
@@ -212,7 +198,7 @@
     // isBoolがNOの場合、...
     if (!isBool) {
     
-        NSString* messageStr = @"ネットにまったく繋がっていないオフライン状態でも、調べたい単語をその場ですぐに調べることができるアプリです。";
+        NSString* messageStr = @"海外などのネットにまったく繋がっていないオフライン状態でも、調べたい英単語などその場ですぐに調べることができるアプリです。";
     
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Searchとは"
                                                             message:messageStr
