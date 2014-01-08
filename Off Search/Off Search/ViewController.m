@@ -77,7 +77,7 @@
     
     request.testDevices = [NSArray arrayWithObjects:
                            GAD_SIMULATOR_ID,                               // シミュレータ
-                           @"00fc204bbc5fdf2b7097ed42369252250a4a2cad",                              // iOS 端末をテスト
+                           @"f7d383a4ed74ca1d826b09f62052c41952161ece",                              // iOS 端末をテスト
                            nil];
     request.testing = YES;
     [adMobView loadRequest:request];
