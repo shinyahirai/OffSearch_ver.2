@@ -75,10 +75,11 @@
     // iAdを表示することが出来なかったらadMobを呼び出す
     GADRequest* request = [GADRequest request];
     
-    request.testDevices = [NSArray arrayWithObjects:
-                           GAD_SIMULATOR_ID,                               // シミュレータ
-                           @"f7d383a4ed74ca1d826b09f62052c41952161ece",                              // iOS 端末をテスト
-                           nil];
+//    request.testDevices = [NSArray arrayWithObjects:
+//                           GAD_SIMULATOR_ID,                               // シミュレータ
+//                           @"f7d383a4ed74ca1d826b09f62052c41952161ece",                              // iOS 端末をテスト
+//                           nil];
+    
     request.testing = YES;
     [adMobView loadRequest:request];
 }

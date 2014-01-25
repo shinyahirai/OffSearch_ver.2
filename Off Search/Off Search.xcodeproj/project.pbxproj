@@ -26,6 +26,7 @@
 		654F39B0183F899C00A41EF5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654F39AF183F899C00A41EF5 /* XCTest.framework */; };
 		654F39B1183F899C00A41EF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654F3990183F899C00A41EF5 /* Foundation.framework */; };
 		654F39B2183F899C00A41EF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654F3994183F899C00A41EF5 /* UIKit.framework */; };
+		65691976187D75BD00E4CD08 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65691975187D75BD00E4CD08 /* Security.framework */; };
 		6594DC2818462C5D00957C40 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6594DC2718462C5D00957C40 /* iAd.framework */; };
 		65A225871842304500ED2A36 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65A225861842304500ED2A36 /* Social.framework */; };
 		65B5A1871841446C00EB3707 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B5A1861841446C00EB3707 /* QuartzCore.framework */; };
@@ -80,6 +81,7 @@
 		654F39A8183F899C00A41EF5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		654F39AE183F899C00A41EF5 /* Off SearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Off SearchTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		654F39AF183F899C00A41EF5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		65691975187D75BD00E4CD08 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6594DC2718462C5D00957C40 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		65A225861842304500ED2A36 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		65B5A1861841446C00EB3707 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -115,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65691976187D75BD00E4CD08 /* Security.framework in Frameworks */,
 				65F4DA1D1855FC5A0026CDB5 /* AVFoundation.framework in Frameworks */,
 				65F4DA1B1855F70A0026CDB5 /* libGoogleAdMobAds.a in Frameworks */,
 				65F4DA0F1855F2DD0026CDB5 /* AdSupport.framework in Frameworks */,
@@ -166,6 +169,7 @@
 		654F398F183F899C00A41EF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65691975187D75BD00E4CD08 /* Security.framework */,
 				65F4DA1C1855FC5A0026CDB5 /* AVFoundation.framework */,
 				65F4DA0E1855F2DD0026CDB5 /* AdSupport.framework */,
 				65F4DA0C1855F2D30026CDB5 /* SystemConfiguration.framework */,
@@ -216,6 +220,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		65691974187D753A00E4CD08 /* Nend */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Nend;
+			sourceTree = "<group>";
+		};
 		65B5A18518401DE900EB3707 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				65F4DA101855F6CE0026CDB5 /* Admob */,
+				65691974187D753A00E4CD08 /* Nend */,
 			);
 			name = Ad;
 			sourceTree = "<group>";

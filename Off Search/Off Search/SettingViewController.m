@@ -510,7 +510,7 @@
     
     // ここでエラーを表示する
     SKPaymentTransaction *transaction = [notification object];
-    NSString *message = [NSString stringWithFormat:@"エラーコード %d", transaction.error.code];
+    NSString *message = [NSString stringWithFormat:@"エラーコード %ldon.(long)", transaction.error.code];
     UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理失敗"
                                                   message:message
                                                  delegate:self
