@@ -305,7 +305,7 @@
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //    }
     
-    cell.textLabel.textColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
     return cell;
 }
 
@@ -510,7 +510,7 @@
     
     // ここでエラーを表示する
     SKPaymentTransaction *transaction = [notification object];
-    NSString *message = [NSString stringWithFormat:@"エラーコード %ldon.(long)", transaction.error.code];
+    NSString *message = [NSString stringWithFormat:@"エラーコード %d", transaction.error.code];
     UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理失敗"
                                                   message:message
                                                  delegate:self

@@ -199,9 +199,9 @@
     // isBoolがNOの場合、...
     if (!isBool) {
     
-        NSString* messageStr = @"海外などのネットにまったく繋がっていないオフライン状態でも、調べたい英単語などその場ですぐに調べることができるアプリです。";
+        NSString* messageStr = @"海外などのネットにまったく繋がっていないオフライン状態でも、調べたい英単語などをその場ですぐに調べることができるアプリです。";
     
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Searchとは"
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Search"
                                                             message:messageStr
                                                            delegate:nil
                                                   cancelButtonTitle:nil
@@ -228,7 +228,7 @@
     _searchBar.delegate = self;
     _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     _searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-    [UISearchBar appearance].barTintColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
+    [UISearchBar appearance].barTintColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
     [UISearchBar appearance].tintColor = [UIColor whiteColor];
     
     // Core Data 用
@@ -257,7 +257,7 @@
     // NavigationBarの表示
     navTitle.rightBarButtonItem = btn1;
     [navBar pushNavigationItem:navTitle animated:YES];
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     
@@ -314,7 +314,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *tableViewHeader = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"Header"];
     tableViewHeader.textLabel.text = @"履歴";
-    tableViewHeader.textLabel.textColor = [UIColor colorWithRed:0.13 green:0.55 blue:0.13 alpha:1.00];
+    tableViewHeader.textLabel.textColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
     return tableViewHeader;
 }
 
@@ -337,7 +337,7 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     cell.textLabel.text = [object valueForKey:@"history"];
-    cell.textLabel.textColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
     
     // 検索日時表示用ラベル
     // deleteのあとにもう一度データを入れると時間がダブルバグが残ってる
