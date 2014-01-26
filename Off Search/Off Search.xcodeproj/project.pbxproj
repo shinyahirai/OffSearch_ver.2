@@ -36,6 +36,9 @@
 		65CD7E9918478C510066950D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CD7E9518478C510066950D /* icon.png */; };
 		65CD7E9B18478D6F0066950D /* icon-small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CD7E9A18478D6F0066950D /* icon-small-40@2x.png */; };
 		65CD7E9D18478E3A0066950D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CD7E9C18478E3A0066950D /* Default.png */; };
+		65E13D6B189460C100C33363 /* libAdapterIAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6A189460C100C33363 /* libAdapterIAd.a */; };
+		65E13D6F189465BA00C33363 /* libAdapterNend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6D189465BA00C33363 /* libAdapterNend.a */; };
+		65E13D70189465BA00C33363 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6E189465BA00C33363 /* libNendAd.a */; };
 		65F4DA071855F2A10026CDB5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA061855F2A10026CDB5 /* StoreKit.framework */; };
 		65F4DA091855F2B00026CDB5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA081855F2B00026CDB5 /* AudioToolbox.framework */; };
 		65F4DA0B1855F2C20026CDB5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA0A1855F2C20026CDB5 /* MessageUI.framework */; };
@@ -92,6 +95,10 @@
 		65CD7E9518478C510066950D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = images/icon.png; sourceTree = "<group>"; };
 		65CD7E9A18478D6F0066950D /* icon-small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-small-40@2x.png"; path = "images/icon-small-40@2x.png"; sourceTree = "<group>"; };
 		65CD7E9C18478E3A0066950D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
+		65E13D6A189460C100C33363 /* libAdapterIAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdapterIAd.a; path = Ad/Admob/libAdapterIAd.a; sourceTree = "<group>"; };
+		65E13D6C189465BA00C33363 /* NADView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NADView.h; path = Ad/Nend/NADView.h; sourceTree = "<group>"; };
+		65E13D6D189465BA00C33363 /* libAdapterNend.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdapterNend.a; path = Ad/Nend/libAdapterNend.a; sourceTree = "<group>"; };
+		65E13D6E189465BA00C33363 /* libNendAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNendAd.a; path = Ad/Nend/libNendAd.a; sourceTree = "<group>"; };
 		65F4DA061855F2A10026CDB5 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		65F4DA081855F2B00026CDB5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		65F4DA0A1855F2C20026CDB5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -119,8 +126,11 @@
 			files = (
 				65691976187D75BD00E4CD08 /* Security.framework in Frameworks */,
 				65F4DA1D1855FC5A0026CDB5 /* AVFoundation.framework in Frameworks */,
+				65E13D6F189465BA00C33363 /* libAdapterNend.a in Frameworks */,
 				65F4DA1B1855F70A0026CDB5 /* libGoogleAdMobAds.a in Frameworks */,
 				65F4DA0F1855F2DD0026CDB5 /* AdSupport.framework in Frameworks */,
+				65E13D70189465BA00C33363 /* libNendAd.a in Frameworks */,
+				65E13D6B189460C100C33363 /* libAdapterIAd.a in Frameworks */,
 				65F4DA0D1855F2D30026CDB5 /* SystemConfiguration.framework in Frameworks */,
 				65F4DA0B1855F2C20026CDB5 /* MessageUI.framework in Frameworks */,
 				65F4DA091855F2B00026CDB5 /* AudioToolbox.framework in Frameworks */,
@@ -223,6 +233,9 @@
 		65691974187D753A00E4CD08 /* Nend */ = {
 			isa = PBXGroup;
 			children = (
+				65E13D6C189465BA00C33363 /* NADView.h */,
+				65E13D6D189465BA00C33363 /* libAdapterNend.a */,
+				65E13D6E189465BA00C33363 /* libNendAd.a */,
 			);
 			name = Nend;
 			sourceTree = "<group>";
@@ -249,6 +262,7 @@
 		65F4DA101855F6CE0026CDB5 /* Admob */ = {
 			isa = PBXGroup;
 			children = (
+				65E13D6A189460C100C33363 /* libAdapterIAd.a */,
 				65F4DA111855F70A0026CDB5 /* GADAdMobExtras.h */,
 				65F4DA121855F70A0026CDB5 /* GADAdNetworkExtras.h */,
 				65F4DA131855F70A0026CDB5 /* GADRequest.h */,
@@ -526,6 +540,7 @@
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Admob",
+					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Nend",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Off Search";
@@ -551,6 +566,7 @@
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Admob",
+					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Nend",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Off Search";

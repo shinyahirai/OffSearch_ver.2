@@ -305,7 +305,7 @@
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //    }
     
-    cell.textLabel.textColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     return cell;
 }
 

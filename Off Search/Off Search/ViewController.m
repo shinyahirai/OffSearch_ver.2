@@ -36,61 +36,62 @@
 #pragma mark adBannerView
 
 //広告の在庫がある場合は表示する
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    if (!bannerIsVisible) {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        banner.frame = CGRectOffset(banner.frame, 0, CGRectGetHeight(banner.frame) + 20);
-        banner.alpha = 1.0;
-        
-        NSLog(@"aaa = %f",CGRectGetHeight(banner.frame) + 20);
-        // もしadMobが表示中なら非表示に
-        if(adMobIsVisible){
-            adMobView.frame = CGRectOffset(adMobView.frame, 0, -CGRectGetHeight(adMobView.frame) - 20);
-            adMobView.alpha = 0.0;
-            adMobIsVisible = NO;
-        }
-        
-        [UIView commitAnimations];
-        bannerIsVisible = YES;
-    }
-}
+//- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+//{
+//    if (!bannerIsVisible) {
+//        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
+//        [UIView setAnimationDuration:0.3];
+//        
+//        banner.frame = CGRectOffset(banner.frame, 0, CGRectGetHeight(banner.frame) + 20);
+//        banner.alpha = 1.0;
+//        
+//        NSLog(@"aaa = %f",CGRectGetHeight(banner.frame) + 20);
+//        // もしadMobが表示中なら非表示に
+//        if(adMobIsVisible){
+//            adMobView.frame = CGRectOffset(adMobView.frame, 0, -CGRectGetHeight(adMobView.frame) - 20);
+//            adMobView.alpha = 0.0;
+//            adMobIsVisible = NO;
+//        }
+//        
+//        [UIView commitAnimations];
+//        bannerIsVisible = YES;
+//    }
+//}
 
 //広告の在庫がない場合は非表示にする
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    if (bannerIsVisible) {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        banner.frame = CGRectOffset(banner.frame, 0, -CGRectGetHeight(banner.frame) - 20);
-        banner.alpha = 0.0;
-        
-        [UIView commitAnimations];
-        bannerIsVisible = NO;
-    }
-    
-    // iAdを表示することが出来なかったらadMobを呼び出す
-    GADRequest* request = [GADRequest request];
-    
+//- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+//{
+//    if (bannerIsVisible) {
+//        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
+//        [UIView setAnimationDuration:0.3];
+//        
+//        banner.frame = CGRectOffset(banner.frame, 0, -CGRectGetHeight(banner.frame) - 20);
+//        banner.alpha = 0.0;
+//        
+//        [UIView commitAnimations];
+//        bannerIsVisible = NO;
+//    }
+//    
+//    // iAdを表示することが出来なかったらadMobを呼び出す
+//    GADRequest* request = [GADRequest request];
+//    
 //    request.testDevices = [NSArray arrayWithObjects:
-//                           GAD_SIMULATOR_ID,                               // シミュレータ
-//                           @"f7d383a4ed74ca1d826b09f62052c41952161ece",                              // iOS 端末をテスト
+////                           GAD_SIMULATOR_ID,                               // シミュレータ
+//                           @"d749cbb7bfca2fbeda28702b0e79c82838c5ed79",   // iOS 端末をテスト
 //                           nil];
-    
-    request.testing = YES;
-    [adMobView loadRequest:request];
-}
+//    
+//    request.testing = YES;
+//    
+//    [adMobView loadRequest:request];
+//}
 
 #pragma mark - adMobBannerView
 - (void)adViewDidReceiveAd:(GADBannerView *)banner
 {
-    if(bannerIsVisible) return;
+//    if(bannerIsVisible) return;
     
     if (!adMobIsVisible) {
-        
+    
         [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
         [UIView setAnimationDuration:0.3];
         
@@ -267,15 +268,15 @@
 
     [self.view addSubview:navBar];
     
-    // iAdバナービューの作成
-    adBannerView = [[ADBannerView alloc] init];
-    adBannerView.frame = CGRectMake(0, -adBannerView.frame.size.height, adBannerView.frame.size.width, adBannerView.frame.size.height);
-    adBannerView.delegate = self;
-    adBannerView.autoresizesSubviews = YES;
-    adBannerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    [self.view addSubview:adBannerView];
-    adBannerView.alpha = 0.0;
-    bannerIsVisible = NO;
+//    // iAdバナービューの作成
+//    adBannerView = [[ADBannerView alloc] init];
+//    adBannerView.frame = CGRectMake(0, -adBannerView.frame.size.height, adBannerView.frame.size.width, adBannerView.frame.size.height);
+//    adBannerView.delegate = self;
+//    adBannerView.autoresizesSubviews = YES;
+//    adBannerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+//    [self.view addSubview:adBannerView];
+//    adBannerView.alpha = 0.0;
+//    bannerIsVisible = NO;
     
     // AdMobバナービューの作成
     adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
@@ -286,6 +287,16 @@
     [self.view addSubview:adMobView];
     adMobView.alpha = 0.0;
     adMobIsVisible = NO;
+    
+    GADRequest* request = [GADRequest request];
+    request.testDevices = [NSArray arrayWithObjects:
+                           //                           GAD_SIMULATOR_ID,                               // シミュレータ
+                           @"d749cbb7bfca2fbeda28702b0e79c82838c5ed79",   // iOS 端末をテスト
+                           nil];
+    
+    request.testing = YES;
+    
+    [adMobView loadRequest:request];
 }
 
 - (void)pushSettingButton {
@@ -337,7 +348,7 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     cell.textLabel.text = [object valueForKey:@"history"];
-    cell.textLabel.textColor = [UIColor colorWithRed:0.109804 green:0.937255 blue:0.956863 alpha:1.00];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     
     // 検索日時表示用ラベル
     // deleteのあとにもう一度データを入れると時間がダブルバグが残ってる
