@@ -11,6 +11,7 @@
 		650F6EBE1845B0FB007D90FC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBB1845B0FB007D90FC /* Default-568h@2x.png */; };
 		650F6EBF1845B0FB007D90FC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBC1845B0FB007D90FC /* Default@2x.png */; };
 		65267CB31841602D00FBA5C4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65267CB21841602D00FBA5C4 /* SettingViewController.m */; };
+		65391ED318971967007DA607 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 65391ED218971967007DA607 /* Reachability.m */; };
 		654ADB4A1840040500241DDB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 654ADB481840040500241DDB /* Model.xcdatamodeld */; };
 		654ADB4D184004BB00241DDB /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 654ADB4C184004BB00241DDB /* History.m */; };
 		654ADB4F184004D100241DDB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 654ADB4E184004D100241DDB /* CoreData.framework */; };
@@ -65,6 +66,8 @@
 		650F6EBC1845B0FB007D90FC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = "<group>"; };
 		65267CB11841602D00FBA5C4 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		65267CB21841602D00FBA5C4 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		65391ED118971967007DA607 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Reachability/Reachability.h; sourceTree = "<group>"; };
+		65391ED218971967007DA607 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Reachability/Reachability.m; sourceTree = "<group>"; };
 		654ADB491840040500241DDB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		654ADB4B184004BB00241DDB /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
 		654ADB4C184004BB00241DDB /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
@@ -124,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F4DA0D1855F2D30026CDB5 /* SystemConfiguration.framework in Frameworks */,
 				65691976187D75BD00E4CD08 /* Security.framework in Frameworks */,
 				65F4DA1D1855FC5A0026CDB5 /* AVFoundation.framework in Frameworks */,
 				65E13D6F189465BA00C33363 /* libAdapterNend.a in Frameworks */,
@@ -131,7 +135,6 @@
 				65F4DA0F1855F2DD0026CDB5 /* AdSupport.framework in Frameworks */,
 				65E13D70189465BA00C33363 /* libNendAd.a in Frameworks */,
 				65E13D6B189460C100C33363 /* libAdapterIAd.a in Frameworks */,
-				65F4DA0D1855F2D30026CDB5 /* SystemConfiguration.framework in Frameworks */,
 				65F4DA0B1855F2C20026CDB5 /* MessageUI.framework in Frameworks */,
 				65F4DA091855F2B00026CDB5 /* AudioToolbox.framework in Frameworks */,
 				65F4DA071855F2A10026CDB5 /* StoreKit.framework in Frameworks */,
@@ -158,6 +161,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65391ED018971921007DA607 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				65391ED118971967007DA607 /* Reachability.h */,
+				65391ED218971967007DA607 /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		654F3984183F899C00A41EF5 = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +213,7 @@
 		654F3996183F899C00A41EF5 /* Off Search */ = {
 			isa = PBXGroup;
 			children = (
+				65391ED018971921007DA607 /* Reachability */,
 				65B5A18518401DE900EB3707 /* model */,
 				65F4D9EF1855F1DF0026CDB5 /* Ad */,
 				654F399F183F899C00A41EF5 /* AppDelegate.h */,
@@ -403,6 +416,7 @@
 			files = (
 				65F4DAA218574AA60026CDB5 /* MyPaymentTransactionObserver.m in Sources */,
 				654F39A7183F899C00A41EF5 /* ViewController.m in Sources */,
+				65391ED318971967007DA607 /* Reachability.m in Sources */,
 				654F39A1183F899C00A41EF5 /* AppDelegate.m in Sources */,
 				654F399D183F899C00A41EF5 /* main.m in Sources */,
 				654ADB4D184004BB00241DDB /* History.m in Sources */,

@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import <StoreKit/StoreKit.h>
+#import "Reachability.h"
 
 @interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,SKProductsRequestDelegate>
 

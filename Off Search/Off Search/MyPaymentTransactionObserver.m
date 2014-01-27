@@ -66,6 +66,7 @@ static MyPaymentTransactionObserver* _sharedObserver = nil;
 // ユーザーの購入履歴からキューに戻されたトランザクションを追加中にエラーが発生したときに送信されます。
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    // TODO: リストアが失敗した時にここを通る
 }
 
 // ユーザの購入履歴から全てのトランザクションが正常に戻され、キューに追加された時に送信されます。

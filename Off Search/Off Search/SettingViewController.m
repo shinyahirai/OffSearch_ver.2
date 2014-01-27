@@ -9,6 +9,10 @@
 #import "SettingViewController.h"
 #import "MyPaymentTransactionObserver.h"
 
+// Reachabilityを使ったネット接続確認マクロ
+#define isOffline \
+([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable ? YES : NO )
+
 @interface SettingViewController () {
     // Purchases
     UIView *_viewGround;
@@ -165,6 +169,23 @@
     NSLog(@"Release log");
 #endif
     
+//    Reachability *reachablity = [Reachability reachabilityForInternetConnection];
+//    NetworkStatus status = [reachablity currentReachabilityStatus];
+//    switch (status) {
+//        case NotReachable:
+//            NSLog(@"インターネット接続出来ません");
+//            break;
+//        case ReachableViaWWAN:
+//            NSLog(@"3G接続中");
+//            break;
+//        case ReachableViaWiFi:
+//            NSLog(@"WiFi接続中");
+//            break;
+//        default:
+//            NSLog(@"？？[%d]", status);
+//            break;
+//    }
+    
 }
 
 #pragma mark - status bar
@@ -316,7 +337,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         // 広告削除(有料)機能
-        [self purchaseView];
+        if (!isOffline) {
+            NSLog(@"ネット環境");
+            [self purchaseView];
+        } else {
+            NSLog(@"接続不可");
+            NSString* message = @"ネットに接続された環境で\nもう一度お試しください。";
+            UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"要ネット接続"
+                                                          message:message
+                                                         delegate:self
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+            [alert show];
+        }
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         // バージョン確認機能
         NSLog(@"No func");
@@ -450,6 +483,7 @@
         return;
     }
     
+    // TODO: 上記if文が通ってしまった場合の分岐が必要？
     // 購入処理を開始する
     SKPayment *payment = [SKPayment paymentWithProduct:[_products objectAtIndex:0]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -489,6 +523,15 @@
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSString *message = [NSString stringWithFormat:@"エラーコード %d\n一定時間経過後に\nもう一度お試しください。", error.code];
+    UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理失敗"
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+    [alert show];
+    
+    [self indicatorHide];
 }
 
 - (void)paymentCompletedNotification:(NSNotification *)notification {
@@ -521,7 +564,7 @@
     
     // ここでエラーを表示する
     SKPaymentTransaction *transaction = [notification object];
-    NSString *message = [NSString stringWithFormat:@"エラーコード %d", transaction.error.code];
+    NSString *message = [NSString stringWithFormat:@"エラーコード %d\n一定時間経過後に\nもう一度お試しください。", transaction.error.code];
     UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理失敗"
                                                   message:message
                                                  delegate:self
