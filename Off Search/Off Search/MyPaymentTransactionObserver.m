@@ -45,7 +45,8 @@ static MyPaymentTransactionObserver* _sharedObserver = nil;
                 break;
                 
             case SKPaymentTransactionStateRestored:
-                // リストア時の処理を行う
+                // TODO: リストア時の処理を行う
+                [self completeTransaction:transaction];
                 NSLog(@"SKPaymentTransactionStateRestored");
                 break;
                 
@@ -79,7 +80,7 @@ static MyPaymentTransactionObserver* _sharedObserver = nil;
     // 購入が完了したことを通知する
     [[NSNotificationCenter defaultCenter] postNotificationName:kPaymentCompletedNotification
                                                         object:transaction];
-    
+    NSLog(@"トランザクションの中身 = %@",transaction);
     // ペイメントキューに終了を伝えてトランザクションを削除する
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 }

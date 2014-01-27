@@ -14,3 +14,19 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+
+#ifdef NS_BLOCK_ASSERTIONS
+
+#ifndef NSLog
+// NSLogを無効にする
+#define NSLog( m, args... )
+#endif
+
+#else
+
+#ifndef NSLog
+#define NSLog( m, args... ) NSLog( m, ##args )
+#endif
+
+#endif

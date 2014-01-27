@@ -533,6 +533,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Off Search/Off Search-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					ENABLE_SANDBOX,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Off Search/Off Search-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -542,6 +547,7 @@
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Admob",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Nend",
 				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Off Search";
 				PROVISIONING_PROFILE = "";
@@ -568,6 +574,7 @@
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Admob",
 					"/Users/shinyahirai/Desktop/github/OffSearch_ver.2/Off\\ Search/Off\\ Search/Ad/Nend",
 				);
+				"OTHER_CFLAGS[arch=*]" = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Off Search";
 				PROVISIONING_PROFILE = "";

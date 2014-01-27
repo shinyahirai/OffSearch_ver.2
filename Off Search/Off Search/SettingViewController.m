@@ -15,6 +15,7 @@
     UIView *_baseView;
     UIButton* _cancelButton;
     UIButton* _buyButton;
+    UIButton* _restoreButton;
     UITextView* _textView;
     
     // ローディング画面用変数
@@ -157,11 +158,16 @@
                            selector:@selector(paymentErrorNotification:)
                                name:kPaymentErrorNotification
                              object:nil];
-
+    
+#if ENABLE_SANDBOX
+    NSLog(@"Debug log");
+#else
+    NSLog(@"Release log");
+#endif
+    
 }
 
-#pragma mark -
-#pragma mark status bar
+#pragma mark - status bar
 - (BOOL)prefersStatusBarHidden {
     //YESでステータスバーを非表示（NOなら表示）
     return NO;
@@ -172,13 +178,12 @@
     return UIStatusBarStyleLightContent;
 }
 
-#pragma mark -
-#pragma mark Cell function
+#pragma mark - Cell function
 
 - (void)postSocial {
     // UIActivityViewControllerはソーシャル等に共有する機能を持ったViewを下からmodalでだしてくれる
     // 今回はSettingの中の共有ボタンで使用
-    NSString *text = @"オフラインでもサクサク辞書検索できるアプリ【Off Search】";
+    NSString *text = @"ネット通信不要!すぐに検索できる辞書アプリ【Off Search】";
     NSURL* url = [NSURL URLWithString:@"https://itunes.apple.com/us/app/off-search/id768224020?ls=1&mt=8"];
     NSArray* actItems = [NSArray arrayWithObjects: text, url, nil];
     NSLog(@"actItems = %@",actItems);
@@ -226,7 +231,6 @@
 #pragma mark tableview
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // return 2;
     return 3;
 }
 
@@ -238,11 +242,6 @@
     } else {
         return @"Off Searchについて";
     }
-//    if (section == 0) {
-//        return @"入力履歴";
-//    } else {
-//        return @"Off Search辞書について";
-//    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -254,6 +253,18 @@
             return 1;
             break;
     }
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        NSUserDefaults *purchaseBool = [NSUserDefaults standardUserDefaults];
+        if ([purchaseBool boolForKey:@"DEFAULT_KEY_BOOL"] == YES) {
+            NSLog(@"購入処理済のため広告削除選択不可");
+            return nil;
+        }
+    }
+    
+    return indexPath;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -269,53 +280,46 @@
     
     if (indexPath.section == 0) {
         cell.textLabel.text = @"広告の削除";
+        NSUserDefaults *purchaseBool = [NSUserDefaults standardUserDefaults];
+        if ([purchaseBool boolForKey:@"DEFAULT_KEY_BOOL"] == YES) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"既に購入済みです";
+            cell.textLabel.textColor = [UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00];
+        } else {
+            cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
+        }
     } else if (indexPath.section == 2 && indexPath.row == 0){
         cell.textLabel.text = @"バージョン";
         
+        cell.accessoryType = UITableViewCellAccessoryNone;
+
         // バージョン表示用ラベル
         UILabel* rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(260,12, 100, 20)];
         // アプリバージョン情報
         NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         rightLabel.text = version;
-        rightLabel.textColor = [UIColor grayColor];
+        rightLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
         [cell addSubview:rightLabel];
+        cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
 
     } else if (indexPath.section == 2 && indexPath.row == 1) {
         cell.textLabel.text = @"友達にこのアプリを共有";
+        cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     } else {
         cell.textLabel.text = @"履歴の一括削除";
+        cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     }
-
-//    if (indexPath.section == 0) {
-//        cell.textLabel.text = @"履歴の一括削除";
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    } else if (indexPath.section == 1 && indexPath.row == 0){
-//        cell.textLabel.text = @"バージョン";
-//        
-//        // バージョン表示用ラベル
-//        UILabel* rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(260,12, 100, 20)];
-//        // アプリバージョン情報
-//        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-//        rightLabel.text = version;
-//        rightLabel.textColor = [UIColor grayColor];
-//        [cell addSubview:rightLabel];
-//        
-//    } else {
-//        cell.textLabel.text = @"友達にこのアプリを共有";
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    }
     
-    cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        // 広告削除(有料)機能実装予定
+        // 広告削除(有料)機能
         [self purchaseView];
     } else if (indexPath.section == 2 && indexPath.row == 0) {
         // バージョン確認機能
-        
+        NSLog(@"No func");
     } else if (indexPath.section == 2 && indexPath.row == 1) {
         // Social共有機能
         [self postSocial];
@@ -323,17 +327,6 @@
         // 履歴削除機能
         [self deleteHistory];
     }
-
-//    if (indexPath.section == 0) {
-//        // 履歴削除機能
-//        [self deleteHistory];
-//    } else if (indexPath.section == 1 && indexPath.row == 0) {
-//        // バージョン確認機能
-//        
-//    } else {
-//        // Social共有機能
-//        [self postSocial];
-//    }
 }
 
 #pragma mark -
@@ -373,6 +366,13 @@
     [_buyButton addTarget:self action:@selector(handleBuyButton) forControlEvents:UIControlEventTouchUpInside];
     [_baseView addSubview:_buyButton];
     
+    _restoreButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 480, 120, 20)];
+    [_restoreButton setAlpha:0.0];
+    [_restoreButton setTitle:@"リストア" forState:UIControlStateNormal];
+    [_restoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_restoreButton addTarget:self action:@selector(handleRestoreButton) forControlEvents:UIControlEventTouchUpInside];
+    [_baseView addSubview:_restoreButton];
+    
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(40, 100, 240, 250)];
     [_textView setAlpha:0.0];
     [_baseView addSubview:_textView];
@@ -383,6 +383,7 @@
     [_baseView setAlpha:0.9];
     [_cancelButton setAlpha:1.0];
     [_buyButton setAlpha:1.0];
+    [_restoreButton setAlpha:1.0];
     [_textView setAlpha:1.0];
 	[UIView commitAnimations];
     
@@ -424,9 +425,10 @@
 }
 
 #pragma mark - purchase
+// プロダクトの情報取得開始メソッド
 - (void)startProductRequest {
     // iTunes Connectで登録したプロダクトのIDに書き換えて下さい
-    NSSet *productIds = [NSSet setWithObjects:@"com.shinya.hirai.1880mm.Off_Search.Remove_ads", nil];
+    NSSet *productIds = [NSSet setWithObjects:@"com.shinya.hirai.1880mm.Off_Search.Remove_banner", nil];
     
     SKProductsRequest *productRequest;
     productRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIds];
@@ -435,8 +437,8 @@
     [self indicatorStart];
 }
 
+// 購入処理の開始前に、端末の設定がコンテンツを購入することができるようになっているか確認する
 - (void)buy {
-    // 購入処理の開始前に、端末の設定がコンテンツを購入することができるようになっているか確認する
     if ([SKPaymentQueue canMakePayments] == NO) {
         NSString *message = @"機能制限でApp内での購入が不可になっています。";
         UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"エラー"
@@ -466,7 +468,7 @@
     
     // 取得したプロダクト情報を順番にUItextVIewに表示する（今回は1つだけ）
     for (SKProduct *product in response.products) {
-        NSString *text = [NSString stringWithFormat:@"Title %@\n\nDescription %@\n\nPrice %@\n\n",
+        NSString *text = [NSString stringWithFormat:@"Title\n%@\n\nDescription\n%@\n\nPrice : %@\n\n",
                           product.localizedTitle,
                           product.localizedDescription,
                           product.price];
@@ -494,7 +496,7 @@
     
     // 実際はここで機能を有効にしたり、コンテンツを表示したいする
     SKPaymentTransaction *transaction = [notification object];
-    NSString *message = [NSString stringWithFormat:@"%@ が購入されました", transaction.payment.productIdentifier];
+    NSString *message = [NSString stringWithFormat:@"%@ の購入が完了致しました。", transaction.payment.productIdentifier];
     UIAlertView *alert =[[UIAlertView alloc]initWithTitle:@"購入処理完了"
                                                   message:message
                                                  delegate:self
@@ -503,6 +505,15 @@
     [alert show];
     
     [self indicatorHide];
+    
+    // 購入処理保存用
+    NSUserDefaults *purchaseBool = [NSUserDefaults standardUserDefaults];
+    // 初期値はNO = 0です
+    [purchaseBool setBool:YES forKey:@"DEFAULT_KEY_BOOL"];
+    NSLog(@"purchaseBool = %hhd",[purchaseBool boolForKey:@"DEFAULT_KEY_BOOL"]);
+    
+    [self purchaseHide];
+    
 }
 
 - (void)paymentErrorNotification:(NSNotification *)notification {
@@ -522,16 +533,25 @@
 }
 
 #pragma mark - handle method
-//- (void)handleProductsRequestButton {
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
-//    [self startProductRequest];
-//}
-
 - (void)handleBuyButton {
     [self indicatorStart];
     NSLog(@"%s", __PRETTY_FUNCTION__);
     [self buy];
 }
 
+- (void)handleRestoreButton {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    
+    [self indicatorStart];
+    // 処理を開始させる
+    [self startRestore];
+}
+
+- (void)startRestore {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    
+    // リストア処理を開始させる
+    [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+}
 
 @end

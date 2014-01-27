@@ -19,9 +19,7 @@
     NSMutableArray* _objectChanges;
     NSMutableArray* _sectionChanges;
 @private
-//    ADBannerView* adBannerView;
     GADBannerView* adMobView;
-//    BOOL bannerIsVisible;
     BOOL adMobIsVisible;
 }
 
