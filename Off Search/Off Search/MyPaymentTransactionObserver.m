@@ -25,6 +25,7 @@ static MyPaymentTransactionObserver* _sharedObserver = nil;
 #pragma mark - SKPaymentTransactionObserver Required Methods
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"transactionの中身 = %@",transactions);
     
     for (SKPaymentTransaction *transaction in transactions) {
         switch (transaction.transactionState) {
@@ -46,7 +47,7 @@ static MyPaymentTransactionObserver* _sharedObserver = nil;
                 
             case SKPaymentTransactionStateRestored:
                 // TODO: リストア時の処理を行う
-                [self completeTransaction:transaction];
+                // [self completeTransaction:transaction];
                 NSLog(@"SKPaymentTransactionStateRestored");
                 break;
                 

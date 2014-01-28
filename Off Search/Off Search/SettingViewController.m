@@ -279,6 +279,7 @@
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         NSUserDefaults *purchaseBool = [NSUserDefaults standardUserDefaults];
+        // TODO: 本番ではYES
         if ([purchaseBool boolForKey:@"DEFAULT_KEY_BOOL"] == YES) {
             NSLog(@"購入処理済のため広告削除選択不可");
             return nil;
@@ -302,6 +303,7 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = @"広告の削除";
         NSUserDefaults *purchaseBool = [NSUserDefaults standardUserDefaults];
+        // TODO: 本番ではYES
         if ([purchaseBool boolForKey:@"DEFAULT_KEY_BOOL"] == YES) {
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"既に購入済みです";
@@ -399,7 +401,7 @@
     [_buyButton addTarget:self action:@selector(handleBuyButton) forControlEvents:UIControlEventTouchUpInside];
     [_baseView addSubview:_buyButton];
     
-    _restoreButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 480, 120, 20)];
+    _restoreButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 500, 120, 20)];
     [_restoreButton setAlpha:0.0];
     [_restoreButton setTitle:@"リストア" forState:UIControlStateNormal];
     [_restoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
