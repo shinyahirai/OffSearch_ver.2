@@ -11,7 +11,6 @@
 		650F6EBE1845B0FB007D90FC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBB1845B0FB007D90FC /* Default-568h@2x.png */; };
 		650F6EBF1845B0FB007D90FC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBC1845B0FB007D90FC /* Default@2x.png */; };
 		65267CB31841602D00FBA5C4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65267CB21841602D00FBA5C4 /* SettingViewController.m */; };
-		65391ED318971967007DA607 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 65391ED218971967007DA607 /* Reachability.m */; };
 		65391EDF18972E58007DA607 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65391ED618972E58007DA607 /* AppiraterLocalizable.strings */; };
 		65391EE018972E58007DA607 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65391ED918972E58007DA607 /* AppiraterLocalizable.strings */; };
 		65391EE118972E58007DA607 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 65391EDC18972E58007DA607 /* Appirater.m */; };
@@ -52,7 +51,6 @@
 		65F4DA0F1855F2DD0026CDB5 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA0E1855F2DD0026CDB5 /* AdSupport.framework */; };
 		65F4DA1B1855F70A0026CDB5 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA1A1855F70A0026CDB5 /* libGoogleAdMobAds.a */; };
 		65F4DA1D1855FC5A0026CDB5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA1C1855FC5A0026CDB5 /* AVFoundation.framework */; };
-		65F4DAA218574AA60026CDB5 /* MyPaymentTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +69,6 @@
 		650F6EBC1845B0FB007D90FC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = "<group>"; };
 		65267CB11841602D00FBA5C4 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		65267CB21841602D00FBA5C4 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		65391ED118971967007DA607 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Reachability/Reachability.h; sourceTree = "<group>"; };
-		65391ED218971967007DA607 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Reachability/Reachability.m; sourceTree = "<group>"; };
 		65391ED718972E58007DA607 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		65391EDA18972E58007DA607 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		65391EDB18972E58007DA607 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Appirater.h; path = appirater/Appirater.h; sourceTree = "<group>"; };
@@ -130,8 +126,6 @@
 		65F4DA191855F70A0026CDB5 /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = Ad/Admob/GADInterstitialDelegate.h; sourceTree = "<group>"; };
 		65F4DA1A1855F70A0026CDB5 /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = Ad/Admob/libGoogleAdMobAds.a; sourceTree = "<group>"; };
 		65F4DA1C1855FC5A0026CDB5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		65F4DAA018574AA60026CDB5 /* MyPaymentTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPaymentTransactionObserver.h; sourceTree = "<group>"; };
-		65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPaymentTransactionObserver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,15 +168,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65391ED018971921007DA607 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				65391ED118971967007DA607 /* Reachability.h */,
-				65391ED218971967007DA607 /* Reachability.m */,
-			);
-			name = Reachability;
-			sourceTree = "<group>";
-		};
 		65391ED418972DD6007DA607 /* appirater */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,7 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				65391ED418972DD6007DA607 /* appirater */,
-				65391ED018971921007DA607 /* Reachability */,
 				65B5A18518401DE900EB3707 /* model */,
 				65F4D9EF1855F1DF0026CDB5 /* Ad */,
 				654F399F183F899C00A41EF5 /* AppDelegate.h */,
@@ -269,8 +253,6 @@
 				654F39A6183F899C00A41EF5 /* ViewController.m */,
 				65267CB11841602D00FBA5C4 /* SettingViewController.h */,
 				65267CB21841602D00FBA5C4 /* SettingViewController.m */,
-				65F4DAA018574AA60026CDB5 /* MyPaymentTransactionObserver.h */,
-				65F4DAA118574AA60026CDB5 /* MyPaymentTransactionObserver.m */,
 				654F39A8183F899C00A41EF5 /* Images.xcassets */,
 				654F3997183F899C00A41EF5 /* Supporting Files */,
 			);
@@ -465,9 +447,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65391EE118972E58007DA607 /* Appirater.m in Sources */,
-				65F4DAA218574AA60026CDB5 /* MyPaymentTransactionObserver.m in Sources */,
 				654F39A7183F899C00A41EF5 /* ViewController.m in Sources */,
-				65391ED318971967007DA607 /* Reachability.m in Sources */,
 				654F39A1183F899C00A41EF5 /* AppDelegate.m in Sources */,
 				654F399D183F899C00A41EF5 /* main.m in Sources */,
 				654ADB4D184004BB00241DDB /* History.m in Sources */,

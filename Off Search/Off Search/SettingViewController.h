@@ -11,16 +11,13 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import <StoreKit/StoreKit.h>
-#import "Reachability.h"
 
-@interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,SKProductsRequestDelegate>
+@interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-// 課金用
-@property (strong, nonatomic) NSArray *products;
 
 @end

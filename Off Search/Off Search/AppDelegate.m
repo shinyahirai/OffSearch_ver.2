@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "MyPaymentTransactionObserver.h"
 
 @implementation AppDelegate
 
@@ -25,9 +24,6 @@
     ViewController *viewController = (ViewController *)controller;
     viewController.managedObjectContext = self.managedObjectContext;
     
-    // トランザクションオブザーバを登録する
-    MyPaymentTransactionObserver *observer = [MyPaymentTransactionObserver sharedObserver];
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
