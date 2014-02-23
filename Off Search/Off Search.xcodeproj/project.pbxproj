@@ -11,6 +11,7 @@
 		650F6EBE1845B0FB007D90FC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBB1845B0FB007D90FC /* Default-568h@2x.png */; };
 		650F6EBF1845B0FB007D90FC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650F6EBC1845B0FB007D90FC /* Default@2x.png */; };
 		65267CB31841602D00FBA5C4 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65267CB21841602D00FBA5C4 /* SettingViewController.m */; };
+		6530ACC018B90826006C437B /* design.png in Resources */ = {isa = PBXBuildFile; fileRef = 6530ACBF18B90826006C437B /* design.png */; };
 		65391EDF18972E58007DA607 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65391ED618972E58007DA607 /* AppiraterLocalizable.strings */; };
 		65391EE018972E58007DA607 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65391ED918972E58007DA607 /* AppiraterLocalizable.strings */; };
 		65391EE118972E58007DA607 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 65391EDC18972E58007DA607 /* Appirater.m */; };
@@ -69,6 +70,7 @@
 		650F6EBC1845B0FB007D90FC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = "<group>"; };
 		65267CB11841602D00FBA5C4 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		65267CB21841602D00FBA5C4 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		6530ACBF18B90826006C437B /* design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = design.png; path = images/design.png; sourceTree = "<group>"; };
 		65391ED718972E58007DA607 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		65391EDA18972E58007DA607 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		65391EDB18972E58007DA607 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Appirater.h; path = appirater/Appirater.h; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 		65F775F01843B980006BD964 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				6530ACBF18B90826006C437B /* design.png */,
 				65CD7E9C18478E3A0066950D /* Default.png */,
 				65CD7E9A18478D6F0066950D /* icon-small-40@2x.png */,
 				65CD7E9218478C510066950D /* icon-60@2x.png */,
@@ -421,6 +424,7 @@
 				654F39A9183F899C00A41EF5 /* Images.xcassets in Resources */,
 				65CD7E9618478C510066950D /* icon-60@2x.png in Resources */,
 				65391EE218972E58007DA607 /* Appirater.podspec in Resources */,
+				6530ACC018B90826006C437B /* design.png in Resources */,
 				650F6EBD1845B0FB007D90FC /* icon@2x.png in Resources */,
 				65CD7E9B18478D6F0066950D /* icon-small-40@2x.png in Resources */,
 				654F399B183F899C00A41EF5 /* InfoPlist.strings in Resources */,
@@ -588,6 +592,7 @@
 		654F39C0183F899C00A41EF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -620,6 +625,7 @@
 		654F39C1183F899C00A41EF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

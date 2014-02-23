@@ -42,6 +42,19 @@
 }   
 
 -(void)pushbackButton {
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    // 例えば
+    transition.type = kCATransitionReveal;
+    // 例えば
+    transition.subtype = kCATransitionFromTop;
+    
+    // Modal のアニメーションを変更する
+    [self.view.layer addAnimation:transition forKey:nil];
+    // ここ、なんでmodalViewControllerじゃないんですかね。。。
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -140,11 +153,11 @@
     
     [self.view addSubview:navBar];
     
-    // ステータスバーの文字色をViewごとに切り替える
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        //viewControllerで制御することを伝える。iOS7 からできたメソッド
-        [self setNeedsStatusBarAppearanceUpdate];
-    }
+//    // ステータスバーの文字色をViewごとに切り替える
+//    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+//        //viewControllerで制御することを伝える。iOS7 からできたメソッド
+//        [self setNeedsStatusBarAppearanceUpdate];
+//    }
     
     
 #if ENABLE_SANDBOX
@@ -161,10 +174,10 @@
     return NO;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    //文字を白くする
-    return UIStatusBarStyleLightContent;
-}
+//- (UIStatusBarStyle)preferredStatusBarStyle {
+//    //文字を白くする
+//    return UIStatusBarStyleLightContent;
+//}
 
 #pragma mark - Cell function
 
@@ -177,7 +190,7 @@
     UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:actItems applicationActivities:nil];
     [self presentViewController:activityView animated:YES completion:nil];
 }
-
+    
 - (void)deleteHistory {
     // 履歴一括削除ボタンを押した時の処理
     

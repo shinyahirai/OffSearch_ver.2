@@ -35,6 +35,8 @@
     [Appirater setAppId:@"768224020"];
     [Appirater appLaunched:YES];
     
+    
+    
     return YES;
 }
 							

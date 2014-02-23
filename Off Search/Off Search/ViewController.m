@@ -36,10 +36,6 @@
     return NO;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    //文字を白くする
-    return UIStatusBarStyleLightContent;
-}
 
 #pragma mark - adMobBannerView
 - (void)adViewDidReceiveAd:(GADBannerView *)banner
@@ -177,9 +173,9 @@
     // SearchBar
     _searchBar.delegate = self;
     _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    _searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
+    _searchBar.spellCheckingType = UITextSpellCheckingTypeYes;
     [UISearchBar appearance].barTintColor = [UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00];
-    [UISearchBar appearance].tintColor = [UIColor whiteColor];
+    [UISearchBar appearance].tintColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     
     // Core Data 用
     _objectChanges = [NSMutableArray array];
@@ -240,7 +236,23 @@
 
 - (void)pushSettingButton {
     // セッティング画面にはコードで遷移
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    // 例えば
+    transition.type = kCATransitionReveal;
+    // 例えば
+    transition.subtype = kCATransitionFromBottom;
+    
+    // Modal のアニメーションを変更する
+    [self.view.layer addAnimation:transition forKey:nil];
+    // ここ、なんでmodalViewControllerじゃないんですかね。。。
+    
+    // Modal を使って画面遷移する
     SettingViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    
+    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
