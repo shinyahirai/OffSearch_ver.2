@@ -27,7 +27,6 @@
     UIView *_loadingView;
     UIActivityIndicatorView *_indicatorView;
     UILabel *_processinglabel;
-    
 }
 
 #pragma mark status bar
