@@ -44,7 +44,7 @@
 		65E13D6B189460C100C33363 /* libAdapterIAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6A189460C100C33363 /* libAdapterIAd.a */; };
 		65E13D6F189465BA00C33363 /* libAdapterNend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6D189465BA00C33363 /* libAdapterNend.a */; };
 		65E13D70189465BA00C33363 /* libNendAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E13D6E189465BA00C33363 /* libNendAd.a */; };
-		65F4DA071855F2A10026CDB5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA061855F2A10026CDB5 /* StoreKit.framework */; };
+		65F4DA071855F2A10026CDB5 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA061855F2A10026CDB5 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		65F4DA091855F2B00026CDB5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA081855F2B00026CDB5 /* AudioToolbox.framework */; };
 		65F4DA0B1855F2C20026CDB5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA0A1855F2C20026CDB5 /* MessageUI.framework */; };
 		65F4DA0D1855F2D30026CDB5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F4DA0C1855F2D30026CDB5 /* SystemConfiguration.framework */; };
