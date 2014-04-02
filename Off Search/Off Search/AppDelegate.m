@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @implementation AppDelegate
 
@@ -17,12 +18,25 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // LoginViewのmanagedObjectContextのデータをappDelegate.managedObjectContextにうつす処理
-    UIViewController *controller = (UIViewController *)self.window.rootViewController;
+     UIViewController *controller = (UIViewController *)self.window.rootViewController;
     
     // ViewController
     ViewController *viewController = (ViewController *)controller;
     viewController.managedObjectContext = self.managedObjectContext;
-
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+    
+    self.window.rootViewController = viewController;
+    [self.window makeKeyAndVisible];
+    
+    // Appirater レビュー機能
+    [Appirater setAppId:@"768224020"];
+    [Appirater appLaunched:YES];
+    
+    
+    
     return YES;
 }
 							
@@ -43,6 +57,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

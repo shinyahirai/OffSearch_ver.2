@@ -12,9 +12,7 @@
 // Admobの広告ID
 #define ADMOB_UNIT_ID @"ca-app-pub-2184081429485889/7218774852"
 
-@interface ViewController () {
-    
-}
+@interface ViewController ()
 
 @end
 
@@ -23,85 +21,25 @@
     NSMutableArray* _beforeHistoryArr;
     NSMutableArray* _afterhistoryArr;
     
+    UIView *_bigView;
     // ローディング画面用変数
     UIView *_loadingViewGround;
     UIView *_loadingView;
     UIActivityIndicatorView *_indicatorView;
     UILabel *_processinglabel;
+    
 }
 
-
-#pragma mark adBannerView
-//広告の初期化
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-//    adBannerView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 50.0)];
-//    adBannerView.delegate = self;
-//    [adBannerView setHidden:YES];
-//    CGRect bannerFrame = adBannerView.frame;
-//    bannerFrame.origin.y = self.view.frame.size.height - self.navigationBar.frame.size.height - adBannerView.frame.size.height;
-//    self.adBannerView.frame = bannerFrame;
-//    [self.view addSubview:adBannerView];
+#pragma mark status bar
+- (BOOL)prefersStatusBarHidden {
+    //YESでステータスバーを非表示（NOなら表示）
+    return NO;
 }
 
-//広告の在庫がある場合は表示する
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    if (!bannerIsVisible) {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        banner.frame = CGRectOffset(banner.frame, 0, CGRectGetHeight(banner.frame) + 20);
-        banner.alpha = 1.0;
-        
-        NSLog(@"aaa = %f",CGRectGetHeight(banner.frame) + 20);
-        // もしadMobが表示中なら非表示に
-        if(adMobIsVisible){
-            adMobView.frame = CGRectOffset(adMobView.frame, 0, -CGRectGetHeight(adMobView.frame) - 20);
-            adMobView.alpha = 0.0;
-            adMobIsVisible = NO;
-        }
-        
-        [UIView commitAnimations];
-        bannerIsVisible = YES;
-    }
-//    [banner setHidden:NO];
-}
-
-//広告の在庫がない場合は非表示にする
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    if (bannerIsVisible) {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        banner.frame = CGRectOffset(banner.frame, 0, -CGRectGetHeight(banner.frame) - 20);
-        banner.alpha = 0.0;
-        
-        [UIView commitAnimations];
-        bannerIsVisible = NO;
-    }
-    
-    // iAdを表示することが出来なかったらadMobを呼び出す
-    GADRequest* request = [GADRequest request];
-    
-    request.testDevices = [NSArray arrayWithObjects:
-                           GAD_SIMULATOR_ID,                               // シミュレータ
-                           @"00fc204bbc5fdf2b7097ed42369252250a4a2cad",                              // iOS 端末をテスト
-                           nil];
-    request.testing = YES;
-    [adMobView loadRequest:request];
-    
-//    [banner setHidden:YES];
-}
 
 #pragma mark - adMobBannerView
 - (void)adViewDidReceiveAd:(GADBannerView *)banner
 {
-    if(bannerIsVisible) return;
-    
     if (!adMobIsVisible) {
         
         [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
@@ -110,10 +48,10 @@
         adMobView.frame = CGRectOffset(adMobView.frame, 0, CGRectGetHeight(adMobView.frame) + 20);
         adMobView.alpha = 1.0;
         
-        NSLog(@"bbb = %f",CGRectGetHeight(adMobView.frame) + 20);
         [UIView commitAnimations];
         adMobIsVisible = YES;
     }
+    NSLog(@"広告読み込み");
 }
 
 - (void)adView:(GADBannerView *)banner didFailToReceiveAdWithError:(GADRequestError *)error
@@ -198,34 +136,21 @@
     return NULL;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear");
-}
-
 - (void)firstTime {
-    // アプリが初めて起動された時だけこのif文を通し、アラートビューを使ってThanksメッセージを表示する。
-    // NSUserDefaultsの取得
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    // KEY_BOOLの内容を取得し、BOOL型変数へ格納
     BOOL isBool = [defaults boolForKey:@"KEY_BOOL"];
-    // isBoolがNOの場合、...
     if (!isBool) {
     
-        NSString* messageStr = @"ネットにまったく繋がっていないオフライン状態でも、調べたい単語をその場ですぐに調べることができるアプリです。";
-    
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Searchとは"
+        NSString* messageStr = @"海外などのネットにまったく繋がっていないオフライン状態でも、調べたい英単語などをその場ですぐに調べることができるアプリです。";
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Off Search"
                                                             message:messageStr
                                                            delegate:nil
                                                   cancelButtonTitle:nil
                                                   otherButtonTitles:@"OK", nil];
         [alertView show];
         
-        // KEY_BOOLにYESを設定
         [defaults setBool:YES forKey:@"KEY_BOOL"];
-        // 設定を保存
         [defaults synchronize];
-        NSLog(@"アプリをダウンロードして初回起動時のみ処理");
     }
 }
 
@@ -233,6 +158,14 @@
 {
     [super viewDidLoad];
     [self firstTime];
+    
+    // バックグラウンド
+    _bigView = [[UIView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+    [_bigView setBackgroundColor:[UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00]];
+    [_loadingView setAlpha:1.0];
+    [self.view addSubview:_bigView];
+    [self.view sendSubviewToBack:_bigView];
+    
     // TableView
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -240,9 +173,9 @@
     // SearchBar
     _searchBar.delegate = self;
     _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    _searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
-    [UISearchBar appearance].barTintColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
-    [UISearchBar appearance].tintColor = [UIColor whiteColor];
+    _searchBar.spellCheckingType = UITextSpellCheckingTypeYes;
+    [UISearchBar appearance].barTintColor = [UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00];
+    [UISearchBar appearance].tintColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     
     // Core Data 用
     _objectChanges = [NSMutableArray array];
@@ -262,7 +195,9 @@
     
     // NavigationBarの右側にセッティング画面に遷移するためのボタンを作成
     // TODO: 広告解除用     UINavigationBar* navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
     UINavigationBar* navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 70, 320, 44)];
+
     // NavigationItemを生成
     UINavigationItem *navTitle = [[UINavigationItem alloc] initWithTitle:@"Off Search"];
     // 設定ボタン生成
@@ -270,27 +205,16 @@
     // NavigationBarの表示
     navTitle.rightBarButtonItem = btn1;
     [navBar pushNavigationItem:navTitle animated:YES];
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00];
     [UINavigationBar appearance].titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
-    
-    // TODO: 広告解除用     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self.view addSubview:navBar];
     
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:@"Header"];
 
-    [self.view addSubview:navBar];
-    
-    // iAdバナービューの作成
-    adBannerView = [[ADBannerView alloc] init];
-    adBannerView.frame = CGRectMake(0, -adBannerView.frame.size.height, adBannerView.frame.size.width, adBannerView.frame.size.height);
-    adBannerView.delegate = self;
-    adBannerView.autoresizesSubviews = YES;
-    adBannerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-    [self.view addSubview:adBannerView];
-    adBannerView.alpha = 0.0;
-    bannerIsVisible = NO;
-    
     // AdMobバナービューの作成
+    adMobView = [[GADBannerView alloc] init];
+    // 画面上部に標準サイズのビューを作成する
     adMobView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
     adMobView.frame = CGRectMake(0, -adMobView.frame.size.height, adMobView.frame.size.width, adMobView.frame.size.height);
     adMobView.delegate = self;
@@ -299,11 +223,36 @@
     [self.view addSubview:adMobView];
     adMobView.alpha = 0.0;
     adMobIsVisible = NO;
+    
+    GADRequest* request = [GADRequest request];
+//    // iOS 端末をテスト
+//    request.testDevices = [NSArray arrayWithObjects:@"00fc204bbc5fdf2b7097ed42369252250a4a2cad",nil];
+//    
+//    request.testing = YES;
+    
+    [adMobView loadRequest:request];
+    
 }
 
 - (void)pushSettingButton {
     // セッティング画面にはコードで遷移
+    
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.4;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    // 例えば
+    transition.type = kCATransitionReveal;
+    // 例えば
+    transition.subtype = kCATransitionFromBottom;
+    
+    // Modal のアニメーションを変更する
+    [self.view.layer addAnimation:transition forKey:nil];
+    // ここ、なんでmodalViewControllerじゃないんですかね。。。
+    
+    // Modal を使って画面遷移する
     SettingViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    
+    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
@@ -319,15 +268,10 @@
     return 1;
 }
 
-//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    
-//    return [NSString stringWithFormat:@"セクション%d", section];
-//}
-
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewHeaderFooterView *tableViewHeader = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"Header"];
     tableViewHeader.textLabel.text = @"履歴";
-    tableViewHeader.textLabel.textColor = [UIColor colorWithRed:0.13 green:0.55 blue:0.13 alpha:1.00];
+    tableViewHeader.textLabel.textColor = [UIColor colorWithRed:0.192157 green:0.760784 blue:0.952941 alpha:1.00];
     return tableViewHeader;
 }
 
@@ -350,17 +294,7 @@
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
     cell.textLabel.text = [object valueForKey:@"history"];
-    cell.textLabel.textColor = [UIColor colorWithRed:1.00 green:0.39 blue:0.28 alpha:1.00];
-    
-    // 検索日時表示用ラベル
-    // deleteのあとにもう一度データを入れると時間がダブルバグが残ってる
-    // 予測：多分時間表示のラベルが自作ラベルのため、CoreData + TableViewの削除ではキャッシュが残ってて消えない
-//    UILabel* rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(220,12, 100, 20)];
-//    NSDateFormatter* df = [[NSDateFormatter alloc] init];
-//    df.dateFormat = @"MM/dd HH:mm";
-//    rightLabel.text = [df stringFromDate:[object valueForKey:@"added"]];
-//    rightLabel.textColor = [UIColor grayColor];
-//    [cell addSubview:rightLabel];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.647059 green:0.647059 blue:0.647059 alpha:1.00];
     
     return cell;
 }
@@ -374,7 +308,6 @@
                                                                                 [self indicatorStop];
                                                                                 }];
     } else {
-        // こいつ何？
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
     _searchBar.text = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
@@ -470,11 +403,9 @@
                              NSLog(@"device 568 = %f",heightSize);
                              // キーボードの高さで条件分岐
                              if (keyboardTop == 308.000000) {
-                                 // キーボードの高さ + searchBarの高さを引いたサイズでtableviewを表示
                                  // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop - 4.f));
                                  _tableView.frame = CGRectMake(0, 114, 320, screenSize.height - (keyboardTop + 46.f));
                              } else if (keyboardTop == 272.000000) {
-                                 // キーボードの高さ + 日本語変換が出た場合の高さ + searchBarの高さを引いたサイズでtableviewを表示
                                  // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop + 68.f));
                                  _tableView.frame = CGRectMake(0, 114, 320, screenSize.height - (keyboardTop + 118.f));
                              }
@@ -485,12 +416,10 @@
                              NSLog(@"device 480 = %f",heightSize);
                              // キーボードの高さで条件分岐
                              if (keyboardTop == 220.000000) {
-                                 // キーボードの高さ + searchBarの高さを引いたサイズでtableviewを表示
-                                 // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop - 4.f));
+                                 // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop + 84.f));
                                  _tableView.frame = CGRectMake(0, 114, 320, screenSize.height - (keyboardTop + 134.f));
                              } else if (keyboardTop == 184.000000) {
-                                 // キーボードの高さ + 日本語変換が出た場合の高さ + searchBarの高さを引いたサイズでtableviewを表示
-                                 // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop + 68.f));
+                                 // TODO: 広告解除用     _tableView.frame = CGRectMake(0, 64, 320, screenSize.height - (keyboardTop + 156.f));
                                  _tableView.frame = CGRectMake(0, 114, 320, screenSize.height - (keyboardTop + 206.f));
                              }
                              _searchBar.frame = CGRectMake(0, keyboardTop, 320, 44);

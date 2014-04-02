@@ -10,6 +10,7 @@
 #import <Social/Social.h>
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import <StoreKit/StoreKit.h>
 
 @interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
@@ -17,5 +18,6 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 
 @end
